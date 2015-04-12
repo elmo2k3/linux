@@ -718,6 +718,22 @@ static struct i2c_board_info __initdata snd_tas5713_i2c_devices[] = {
                 I2C_BOARD_INFO("tas5713", 0x1b)
         },
 };
+
+#endif
+
+#if defined(CONFIG_SND_BCM2708_SOC_RPI_DABPI) || defined(CONFIG_SND_BCM2708_SOC_RPI_DABPI_MODULE)
+static struct platform_device snd_rpi_dabpi_device = {
+        .name = "snd-dabpi",
+        .id = 0,
+        .num_resources = 0,
+};
+
+static struct platform_device snd_si468x_codec_device = {
+        .name = "si468x-codec",
+        .id = -1,
+        .num_resources = 0,
+};
+
 #endif
 
 #if defined(CONFIG_SND_BCM2708_SOC_RPI_DAC) || defined(CONFIG_SND_BCM2708_SOC_RPI_DAC_MODULE)
@@ -958,6 +974,11 @@ void __init bcm2708_init(void)
 #if defined(CONFIG_SND_BCM2708_SOC_RPI_DAC) || defined(CONFIG_SND_BCM2708_SOC_RPI_DAC_MODULE)
         bcm_register_device_dt(&snd_rpi_dac_device);
         bcm_register_device_dt(&snd_pcm1794a_codec_device);
+#endif
+
+#if defined(CONFIG_SND_BCM2708_SOC_RPI_DABPI) || defined(CONFIG_SND_BCM2708_SOC_RPI_DABPI_MODULE)
+        bcm_register_device(&snd_rpi_dabpi_device);
+        bcm_register_device(&snd_si468x_codec_device);
 #endif
 
 #if defined(CONFIG_SND_BCM2708_SOC_IQAUDIO_DAC) || defined(CONFIG_SND_BCM2708_SOC_IQAUDIO_DAC_MODULE)
